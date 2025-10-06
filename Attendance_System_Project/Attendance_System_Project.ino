@@ -33,7 +33,6 @@ void byteArray_to_string(byte array[], unsigned int len, char buffer[]) {
   buffer[len*2] = '\0';
 }
 
-// Read UID helper
 int getUID(char outBuffer[], unsigned int bufLen) {
   if (!mfrc522.PICC_IsNewCardPresent()) return 0;
   if (!mfrc522.PICC_ReadCardSerial()) return 0;
@@ -46,7 +45,6 @@ int getUID(char outBuffer[], unsigned int bufLen) {
   return 1;
 }
 
-// Short beep -- handles active vs passive buzzer
 void beepOnce() {
 #if BUZZER_IS_ACTIVE
   digitalWrite(BUZZER_PIN, HIGH);
@@ -59,7 +57,6 @@ void beepOnce() {
 #endif
 }
 
-// Distinct beep for success
 void beepSuccess() {
   // two short beeps
   beepOnce();
@@ -67,7 +64,6 @@ void beepSuccess() {
   beepOnce();
 }
 
-// Distinct beep for failure
 void beepFail() {
 #if BUZZER_IS_ACTIVE
   digitalWrite(BUZZER_PIN, HIGH);
@@ -80,7 +76,6 @@ void beepFail() {
 #endif
 }
 
-// Connect to Wi-Fi with simple retries
 void connectWiFi() {
   if (WiFi.status() == WL_CONNECTED) return;
   Serial.printf("Connecting to WiFi '%s' ...\n", WIFI_SSID);
@@ -99,7 +94,6 @@ void connectWiFi() {
   }
 }
 
-// Send attendance POST, returns HTTP code or 0 on network error
 int sendAttendance(const String &uid) {
   if (WiFi.status() != WL_CONNECTED) {
     Serial.println("WiFi not connected, attempting reconnect...");
@@ -111,7 +105,7 @@ int sendAttendance(const String &uid) {
   }
 
   HTTPClient http;
-  http.begin(SERVER_URL); // HTTP
+  http.begin(SERVER_URL);
   http.addHeader("Content-Type", "application/json");
 
   String payload = "{\"uid\":\"" + uid + "\",\"device_id\":\"" + String(DEVICE_ID) + "\"}";
@@ -129,11 +123,9 @@ void setup(){
   Serial.begin(115200);
   delay(200);
 
-  // Init SPI + RFID
   SPI.begin();
   mfrc522.PCD_Init();
 
-  // buzzer pin init
 #if BUZZER_IS_ACTIVE
   pinMode(BUZZER_PIN, OUTPUT);
   digitalWrite(BUZZER_PIN, LOW);
@@ -141,7 +133,6 @@ void setup(){
   pinMode(BUZZER_PIN, OUTPUT);
 #endif
 
-  // Connect WiFi initially
   connectWiFi();
 
   Serial.println();
@@ -157,12 +148,10 @@ void loop(){
     Serial.print("UID detected: ");
     Serial.println(uid);
 
-    // beep immediate acknowledge
     beepOnce();
 
     unsigned long now = millis();
 
-    // Cooldown: avoid sending same UID repeatedly
     if (uid == lastSentUid && (now - lastSentMillis) < SEND_COOLDOWN_MS) {
       Serial.println("Duplicate UID within cooldown, ignoring.");
     } else {
@@ -175,14 +164,12 @@ void loop(){
       } else if (code == 0) {
         Serial.println("Network error sending attendance.");
         beepFail();
-        // Optionally: queue for retry (not implemented here)
       } else {
         Serial.printf("Server returned error code %d\n", code);
         beepFail();
       }
     }
 
-    // Small debounce to avoid immediate re-read
     delay(300);
   }
   delay(10);
