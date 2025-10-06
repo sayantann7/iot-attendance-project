@@ -1,0 +1,11 @@
+attendance-system-backend/node_modules/
+attendance-system-backend/dist/
+attendance-system-backend/.env
+attendance-system-backend/*.md
+
+attendance-system-frontend/node_modules/
+attendance-system-frontend/dist/
+attendance-system-frontend/.env
+attendance-system-frontend/*.md
+
+attendance-system-backend.code-workspace

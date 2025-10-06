@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+@theme {
+  /* Fonts */
+  --font-family-sans: 'Space Grotesk', Helvetica, sans-serif;
+  --font-family-mono: 'Space Mono', monospace;
+  
+  /* 3-Color Palette: Blue (#2563EB), Orange (#F97316), White (#FFFFFF) */
+  --color-blue: #2563EB;
+  --color-orange: #F97316;
+  --color-white: #FFFFFF;
+  --color-gray-light: #F8FAFC;
+  --color-gray-border: #E2E8F0;
+  
+  /* Semantic color mappings */
+  --color-background: var(--color-white);
+  --color-foreground: var(--color-blue);
+  --color-card: var(--color-white);
+  --color-card-foreground: var(--color-blue);
+  --color-popover: var(--color-white);
+  --color-popover-foreground: var(--color-blue);
+  --color-primary: var(--color-blue);
+  --color-primary-foreground: var(--color-white);
+  --color-secondary: var(--color-gray-light);
+  --color-secondary-foreground: var(--color-blue);
+  --color-muted: var(--color-gray-light);
+  --color-muted-foreground: var(--color-blue);
+  --color-accent: var(--color-orange);
+  --color-accent-foreground: var(--color-white);
+  --color-destructive: var(--color-orange);
+  --color-destructive-foreground: var(--color-white);
+  --color-border: var(--color-gray-border);
+  --color-input: var(--color-gray-border);
+  --color-ring: var(--color-blue);
+  --radius: 0.5rem;
+}
+
+* {
+  border-color: var(--color-border);
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-family-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Clean, minimal aesthetic */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+button {
+  font-family: var(--font-family-sans);
+  font-weight: 500;
+}
+
+input, textarea {
+  font-family: Helvetica, var(--font-family-sans);
+}
