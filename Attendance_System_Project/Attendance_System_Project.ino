@@ -5,7 +5,7 @@
 
 const char* WIFI_SSID     = "shashank-one-plus";
 const char* WIFI_PASSWORD = "shashank181";
-const char* SERVER_URL    = "http://10.114.128.235:3000/attendance"; 
+const char* SERVER_URL    = "http://iot-attendance.sayantan.space/attendance";
 
 const char* DEVICE_ID = "esp32-01";
 
